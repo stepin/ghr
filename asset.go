@@ -86,6 +86,16 @@ func UploadAsset(asset *Asset, apiOpts *GitHubAPIOpts) (err error) {
 	// Upload URL is provided when Creating release.
 	client.UploadURL = ExtractUploadURL(apiOpts)
 
+	// Check if file is empty
+	fileinfo, err := os.Stat(asset.Path)
+	if err != nil {
+		return fmt.Errorf("failed to get file info: %s\n", asset.Name)
+	}
+	if fileinfo.Size() == 0 {
+		fmt.Printf("Warning: GitHub do not allow empty files to upload: %s (skipping)\n", asset.Name)
+		return nil
+	}
+
 	// OpenFile
 	file, err := os.Open(asset.Path)
 	if err != nil {

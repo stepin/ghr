@@ -1,3 +1,9 @@
+## pre-release
+
+### Fixed
+
+- Fixed upload of empty files to the GitHub
+
 ## 0.4.0 (2014-12-17)
 
 ### Added
